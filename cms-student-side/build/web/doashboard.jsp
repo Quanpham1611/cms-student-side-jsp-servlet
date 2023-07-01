@@ -48,9 +48,11 @@
                 </c:forEach>
             </select>
 
+            <form action="searchkeyword" method="get">
+                <input type="text" id="keywordInput" name="keyword" placeholder="Nhập từ khóa" style="height: 20px; margin-left: 10px;">
+            </form>
 
-
-            <div class="user-info" style="display: flex; margin-left: 540px;">
+            <div class="user-info" style="display: flex; margin-left: 420px;">
                 <p class="user-name" onclick="toggleMenu()"><%= name %></p>
                 <img src="<%= picture %>" alt="User Avatar" class="user-avatar" style="width: 35px; height: 32px; border-radius: 40px;" onclick="toggleMenu()">
 
@@ -227,6 +229,16 @@
             var selectedValue = selectElement.value;
             window.location.href = "coursedetailenrolled.jsp?course=" + selectedValue;
         }
+
+        function onKeywordInputKeyDown(event) {
+            if (event.keyCode === 13) { // Enter key
+                var keyword = document.getElementById("keywordInput").value;
+                window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+            }
+        }
+
+        document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
+
         document.getElementById("enrollCourseId").addEventListener("change", onEnrollCourseChange);
     </script>
 </html>

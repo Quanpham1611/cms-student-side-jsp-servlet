@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -149,13 +150,58 @@ public class Course extends DBContext {
                 pstmt.setString(1, userId);  // Thay userId bằng giá trị tương ứng
                 pstmt.setString(2, courseId);
                 pstmt.executeUpdate();
-                
+
                 return true;
             }
         } catch (SQLException e) {
             System.out.println("EnrollServlet: " + e.getMessage());
         }
         return false;
+    }
+
+    public ArrayList<Course> searchByKeyWord(String keyword) {
+        ArrayList<Course> searchResult = new ArrayList<>();
+
+        try {
+            // Truy vấn theo thứ tự ưu tiên: CourseId, CourseName, TeacherName
+            String sqlQuery = "SELECT * FROM Course WHERE CourseId like ? UNION ALL "
+                    + "SELECT * FROM Course WHERE CourseName like ? AND CourseId <> ? UNION ALL "
+                    + "SELECT * FROM Course WHERE TeacherName like ? AND CourseId <> ? AND CourseName <> ?";
+
+            PreparedStatement statement = cnn.prepareStatement(sqlQuery);
+            statement.setString(1, "%" + keyword + "%");
+            statement.setString(2, "%" + keyword + "%");
+            statement.setString(3, "%" + keyword + "%");
+            statement.setString(4, "%" + keyword + "%");
+            statement.setString(5, "%" + keyword + "%");
+            statement.setString(6, "%" + keyword + "%");
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Lặp qua các kết quả và thêm vào danh sách searchResult
+            while (resultSet.next()) {
+                String courseId = resultSet.getString("CourseId");
+                String courseName = resultSet.getString("CourseName");
+                String semester = resultSet.getString("Semester");
+                String teacherName = resultSet.getString("TeacherName");
+                String picture = resultSet.getString("Picture");
+
+                Course course = new Course(courseId, courseName, semester, teacherName, picture);
+                searchResult.add(course);
+                System.out.println(courseId);
+                System.out.println(courseName);
+                System.out.println(semester);
+                System.out.println(teacherName);
+                System.out.println(picture);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("searchByKeyWord: " + e.getMessage());
+        }
+
+        return searchResult;
     }
 
 }

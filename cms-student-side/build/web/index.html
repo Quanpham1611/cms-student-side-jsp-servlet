@@ -1,45 +1,19 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CMS - Course Management System</title>
-        <link rel="shortcut icon" href="https://cmshn.fpt.edu.vn/theme/image.php/trema/theme/1684246329/favicon">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-            integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-            />
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
-            <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo">
-            <a class="login-title">BẠN CHƯA ĐĂNG NHẬP(<a href="login.jsp" class="underline-link">ĐĂNG NHẬP</a>)</a>
-            <ul class="menu__box">
-                <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
-            </ul>
-        </div>
-        <div class="background-section">
-            <div class="content">
-                <h1 style="color: white">FPT EDUCATION</h1>
-                <br><h2 style="color: white;">COURSE MANAGEMENT SYSTEM</h2>
-                <input type="submit" name="learn-more" value="LEARN MORE" style="background-color: #FD647A; width: 80px; height: 40px">
-            </div>
-            <div class="image-overlay"></div>
-        </div>
-        <footer class="site-footer">
-            <div class="footer-content">
-                <a>Bạn chưa đăng nhập(<a href="login.jsp" style="color: white">ĐĂNG NHẬP</a>)</a>
-            </div>       
-        </footer>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Course Management System</title>
+    <link rel="shortcut icon" href="https://cmshn.fpt.edu.vn/theme/image.php/trema/theme/1684246329/favicon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-pzjw8cyd9b3qu8j4g+e+b2p9jc6h26ql5a4h9s3nsj6ja4e1669+5f16vbwede/n"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <style>
         #menu__toggle {
             opacity: 0;
@@ -120,18 +94,17 @@
             margin-left: 850px;
             align-items: center;
             justify-content: center;
-
         }
-        .hamburger-menu{
+        .hamburger-menu {
             position: fixed;
             background-color: transparent;
         }
         .background-section {
             position: fixed;
-            top: 50px; /* Đặt top thành chiều cao của menu */
+            top: 50px;
             left: 0;
             width: 100%;
-            height: calc(100% - 50px); /* Điều chỉnh chiều cao của phần tử này để lấp đầy phần còn lại của trang */
+            height: calc(100% - 50px);
             background-image: url("https://cmshn.fpt.edu.vn/pluginfile.php/1/theme_trema/frontpagebanner/1684246329/sanhAlpha.jpg");
             background-size: cover;
             background-repeat: no-repeat;
@@ -151,13 +124,51 @@
             background-color: #333;
             color: white;
             padding: 20px;
-            z-index: 1; /* Lớp vượt qua ảnh nền */
+            z-index: 1;
         }
         .footer-content {
             display: flex;
-            justify-content: center; /* Căn giữa theo chiều ngang */
-            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: center;
+            align-items: center;
             height: 100%;
         }
-        </style>
-    </html>
+    </style>
+</head>
+<body>
+    <div class="hamburger-menu">
+        <input id="menu__toggle" type="checkbox" />
+        <label class="menu__btn" for="menu__toggle">
+            <span></span>
+        </label>
+        <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo">
+        <a class="login-title">BẠN CHƯA ĐĂNG NHẬP(<a href="login.jsp" class="underline-link">ĐĂNG NHẬP</a>)</a>
+        <ul class="menu__box">
+            <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+        </ul>
+    </div>
+    <div class="background-section">
+        <div class="content">
+            <h1 style="color: white">FPT EDUCATION</h1>
+            <br>
+            <h2 style="color: white;">COURSE MANAGEMENT SYSTEM</h2>
+            <input type="submit" name="learn-more" value="LEARN MORE" style="background-color: #FD647A; width: 80px; height: 40px">
+        </div>
+        <div class="image-overlay"></div>
+    </div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <a>Bạn chưa đăng nhập(<a href="login.jsp" style="color: white">ĐĂNG NHẬP</a>)</a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
+        integrity="sha384-XstKF40FNlX8o6tLgdPw/s6dm1R8UyXzsUbhsr/+upb90zR2R9PM2lrBzlk0tbax"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-pzjw8cyd9b3qu8j4g+e+b2p9jc6h26ql5a4h9s3nsj6ja4e1669+5f16vbwede/n"
+        crossorigin="anonymous"></script>
+</body>
+</html>
