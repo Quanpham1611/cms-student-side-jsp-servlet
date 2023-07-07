@@ -6,5 +6,8 @@ using java 8, jsp, servlet
   +) open file DBContext in package dal change name of sql server
   +) open sql server and import data using commands in document.java
 - Idea: you can base on diagram to understand the flow of code
+- Algorithms:
+  +) oauth 2.0: using login by google to quickly login
+  +) jstl
 - Setup library to correct path
 - Deploy and Run the project
