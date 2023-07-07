@@ -63,6 +63,7 @@ public class CourseDetail extends HttpServlet {
             
             CourseExam courseExam = new CourseExam();
             ArrayList<CourseExam> exam = courseExam.getExamByCourseId(courseId);
+
             if (!content.isEmpty() || !exam.isEmpty()) {
                 request.setAttribute("exam", exam);
                 request.setAttribute("content", content);

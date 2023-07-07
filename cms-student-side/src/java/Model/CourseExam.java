@@ -45,7 +45,7 @@ public class CourseExam extends DBContext {
         connect();
     }
 
-    public String getCourseName() {
+    public String getExamName() {
         return examName;
     }
 
@@ -98,7 +98,7 @@ public class CourseExam extends DBContext {
 
                 CourseExam courseExam = new CourseExam(examName, courseId, begin, finish);
                 searchResult.add(courseExam);
-                System.out.println(courseExam);
+                System.out.println("1 " + examName +" 2 "+ courseId +" 3 " + begin +" 4 " +finish);
             }
 
             resultSet.close();
@@ -106,7 +106,6 @@ public class CourseExam extends DBContext {
         } catch (SQLException e) {
             System.out.println("getExamByCourseId: " + e.getMessage());
         }
-        System.out.println(searchResult);
         return searchResult;
     }
 

@@ -32,26 +32,15 @@
                 </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
-            <h2 style="margin-left: 10px; color: red">${courseName} - ${teacher} - ${semester}</h2>
+            <h1 style="color: red">Nộp bài kiểm tra</h1>
         </div>
 
-        <div class="content-body">
-            <h3 style="color: red">Uploads File</h3>
 
-            <c:forEach items="${content}" var="courseContent">
-                <div class="square-box" >
-                    <a href="download?name=${courseContent.contentName}" style="color: black; text-decoration: none; font-size: 30px">${courseContent.contentName}</a><br>
-                </div>
-            </c:forEach>
-            <c:forEach items="${exam}" var="courseExam">
-                <div class="square-box" >
-                    <a href="submitfile.jsp?examName=${courseExam.examName}" style="color: black; text-decoration: none; font-size: 30px" onclick="showRemainingTime('${courseExam.finish}')">
-                        Bạn có bài kiểm tra: ${courseExam.examName}(bắt đầu: ${courseExam.begin} - kết thúc: ${courseExam.finish})
-                    </a><br>
-                </div>
-            </c:forEach>
-
-        </div>
+        <form action="submit-exam" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="examName" value="<%= request.getParameter("examName") %>">
+            <input type="file" name="examFile" style="margin-top: 10px; margin-bottom: 10px"><br>
+            <input type="submit" value="Nộp bài kiểm tra">
+        </form>
 
     </body>
     <style>
@@ -152,32 +141,4 @@
             color: #000;
         }
     </style>
-    <script>
-        function showRemainingTime(finishTime) {
-            var currentTime = new Date();
-            var endTime = new Date(finishTime);
-
-            var remainingTime = endTime - currentTime;
-
-            // Chuyển đổi thời gian còn lại thành giây
-            var remainingSeconds = Math.floor(remainingTime / 1000);
-
-            if (remainingSeconds > 0) {
-                var remainingMinutes = Math.floor(remainingSeconds / 60);
-                var remainingHours = Math.floor(remainingMinutes / 60);
-                var remainingDays = Math.floor(remainingHours / 24);
-
-                remainingHours %= 24;
-                remainingMinutes %= 60;
-                remainingSeconds %= 60;
-
-                var alertMessage = "Bạn còn " + remainingDays + " ngày, " + remainingHours + " giờ, " + remainingMinutes + " phút, " + remainingSeconds + " giây để làm bài kiểm tra.";
-
-                alert(alertMessage);
-            } else {
-                alert("Thời gian làm bài kiểm tra đã hết.");
-            }
-        }
-    </script>
-
 </html>

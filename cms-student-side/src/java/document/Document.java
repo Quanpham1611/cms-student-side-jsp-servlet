@@ -125,8 +125,20 @@ public class Document {
         CourseId NVARCHAR(256) REFERENCES Course(CourseId),
 	ExamBegin Datetime,
         ExamFinish Datetime,
-);
-
+    );
+    - Khi khóa học nào có bài kiểm tra thì sẽ hiện thị lên cho người dùng biết
+    - Khi làm bài xong người dùng sẽ nộp lại file bài tập
+    - Tạo bảng
+    create table SubmitExam(
+	UserId nvarchar(256) references Users(ID),
+	ExamName nvarchar(256),
+	FileName nvarchar(256) not null,
+	FilePath nvarchar(256) not null
+    );
+    - Sau khi người dùng nộp thành công phải có 2 yêu cầu
+    +) file-path đã được lưu vào database
+    +) folder uploads-std đã có file đó
+    đáp ứng đủ 2 yêu cầu trên chức năng hoàn thành
 
      */
 

@@ -43,6 +43,13 @@
                     <a href="download?name=${courseContent.contentName}" style="color: black; text-decoration: none; font-size: 30px">${courseContent.contentName}</a><br>
                 </div>
             </c:forEach>
+            <c:forEach items="${exam}" var="courseExam">
+                <div class="square-box" >
+                    <a href="submitfile.jsp?examName=${courseExam.examName}" style="color: black; text-decoration: none; font-size: 30px" onclick="showRemainingTime('${courseExam.finish}')">
+                        Bạn có bài kiểm tra: ${courseExam.examName}(bắt đầu: ${courseExam.begin} - kết thúc: ${courseExam.finish})
+                    </a><br>
+                </div>
+            </c:forEach>
 
         </div>
 
@@ -145,4 +152,32 @@
             color: #000;
         }
     </style>
+    <script>
+        function showRemainingTime(finishTime) {
+            var currentTime = new Date();
+            var endTime = new Date(finishTime);
+
+            var remainingTime = endTime - currentTime;
+
+            // Chuyển đổi thời gian còn lại thành giây
+            var remainingSeconds = Math.floor(remainingTime / 1000);
+
+            if (remainingSeconds > 0) {
+                var remainingMinutes = Math.floor(remainingSeconds / 60);
+                var remainingHours = Math.floor(remainingMinutes / 60);
+                var remainingDays = Math.floor(remainingHours / 24);
+
+                remainingHours %= 24;
+                remainingMinutes %= 60;
+                remainingSeconds %= 60;
+
+                var alertMessage = "Bạn còn " + remainingDays + " ngày, " + remainingHours + " giờ, " + remainingMinutes + " phút, " + remainingSeconds + " giây để làm bài kiểm tra.";
+
+                alert(alertMessage);
+            } else {
+                alert("Thời gian làm bài kiểm tra đã hết.");
+            }
+        }
+    </script>
+
 </html>
