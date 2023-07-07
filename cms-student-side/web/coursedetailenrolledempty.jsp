@@ -1,5 +1,5 @@
 <%-- 
-    Document   : coursedetailenrolled
+    Document   : coursedetailenrolledempty
     Created on : Jun 22, 2023, 7:36:32 AM
     Author     : Dell
 --%>
@@ -38,11 +38,7 @@
         <div class="content-body">
             <h3 style="color: red">Uploads File</h3>
 
-            <c:forEach items="${content}" var="courseContent">
-                <div class="square-box" >
-                    <a href="download?name=${courseContent.contentName}" style="color: black; text-decoration: none; font-size: 30px">${courseContent.contentName}</a><br>
-                </div>
-            </c:forEach>
+            <h1 style="color: red">Oops!!! Thầy\cô của bạn chưa upload file gì lên cms rồi</h1>
 
         </div>
 

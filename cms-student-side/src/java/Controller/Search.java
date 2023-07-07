@@ -63,8 +63,14 @@ public class Search extends HttpServlet {
         ArrayList<Course> c = new ArrayList<>();
         Course cr = new Course();
         c = cr.searchByKeyWord(keyword);
-        request.setAttribute("c", c);
-        request.getRequestDispatcher("searchresult.jsp").forward(request, response);
+        if (!c.isEmpty()) {
+            request.setAttribute("c", c);
+            request.getRequestDispatcher("searchresult.jsp").forward(request, response);
+        } else {
+            request.setAttribute("keyword", keyword);
+            request.getRequestDispatcher("searchagain.jsp").forward(request, response);
+        }
+
     }
 
     /**

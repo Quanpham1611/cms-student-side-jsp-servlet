@@ -204,4 +204,21 @@ public class Course extends DBContext {
         return searchResult;
     }
 
+    public String getCourseIdByCourseName(String courseName) {
+        String courseId = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT courseId FROM course WHERE courseName = ?");
+            statement.setString(1, courseName);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Lấy kết quả từ ResultSet
+            if (resultSet.next()) {
+                courseId = resultSet.getString("courseId");
+            }
+        } catch (SQLException e) {
+            System.out.println("getCourseIdByCourseName: " + e.getMessage());
+        }
+        return courseId;
+    }
 }
+

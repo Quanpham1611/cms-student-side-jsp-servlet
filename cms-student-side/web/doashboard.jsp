@@ -42,11 +42,15 @@
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="width: 100px; height: 27px">
             <label for="cars" class="fa fa-mortar-board" style="margin-left: 10px; width: 100px">Khóa học của bạn:</label>
 
-            <select id="enrollCourseId" style="height: 20px;">
-                <c:forEach items="${enrolledCourses}" var="course">
-                    <option value="${course.courseId}">${course.courseId} - ${course.courseName}</option>
-                </c:forEach>
-            </select>
+
+            <form action="enroll?courseName=${course.courseName}" method="post">
+                <select id="enrollCourseId" name="enrollCourseId" style="height: 20px; width: 250px;" onchange="this.form.submit()">
+                    <option>ALL</option>
+                    <c:forEach items="${enrolledCourses}" var="course">
+                        <option value="${course.courseName}">${course.courseId} - ${course.courseName}</option>
+                    </c:forEach>
+                </select>
+            </form>
 
             <form action="searchkeyword" method="get">
                 <input type="text" id="keywordInput" name="keyword" placeholder="Nhập từ khóa" style="height: 20px; margin-left: 10px;">
@@ -66,6 +70,7 @@
             <ul class="menu__box">
                 <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
                 <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
+
 
             </ul>
         </div>
@@ -226,19 +231,20 @@
         }
         function onEnrollCourseChange() {
             var selectElement = document.getElementById("enrollCourseId");
-            var selectedValue = selectElement.value;
-            window.location.href = "coursedetailenrolled.jsp?course=" + selectedValue;
-        }
-
-        function onKeywordInputKeyDown(event) {
-            if (event.keyCode === 13) { // Enter key
-                var keyword = document.getElementById("keywordInput").value;
-                window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+            var selectedCourse = selectElement.value;
+            if (selectedCourse !== "") {
+                window.location.href = "enroll?courseName=" + selectedCourse;
             }
-        }
 
-        document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
+            function onKeywordInputKeyDown(event) {
+                if (event.keyCode === 13) { // Enter key
+                    var keyword = document.getElementById("keywordInput").value;
+                    window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+                }
+            }
 
-        document.getElementById("enrollCourseId").addEventListener("change", onEnrollCourseChange);
+            document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
+
+            document.getElementById("enrollCourseId").addEventListener("change", onEnrollCourseChange);
     </script>
 </html>

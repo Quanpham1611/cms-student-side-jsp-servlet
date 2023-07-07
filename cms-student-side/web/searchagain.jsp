@@ -1,17 +1,10 @@
 <%-- 
-    Document   : doashboard
-    Created on : Jun 9, 2023, 2:51:01 PM
+    Document   : searchagain
+    Created on : Jul 1, 2023, 9:11:42 AM
     Author     : Dell
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="java.util.ArrayList" %>
-<%@page import="Model.Course" %>
-<%     
-    ArrayList<Course> allCourses = new ArrayList<>();
-    if (request.getAttribute("allCourses") != null)
-        allCourses = (ArrayList<Course>) request.getAttribute("allCourses");
-%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,21 +40,33 @@
             </form>
         </div>
         <div class="body-content">
-            <c:forEach items="${allCourses}" var="course">
-                <div class="subject">
-                    <img src="${course.picture}" style="width: 100%; height: 100%">
-                    <a href="course?picture=${course.picture}&courseName=${course.courseName}&semester=${course.semester}&teacher=${course.teacherName}">Course Name: ${course.courseName}</a>
-                    <p>Semester: ${course.semester}</p>
-                    <p>Teacher: ${course.teacherName}</p>
-                </div>
-            </c:forEach>
+            <h1 style="color: red; margin-left: 10px">Không tìm thấy kết quả nào khớp với ${keyword}!</h1><br>
+        </div>
+        <div id="backgroundVideo">
+            <iframe src="https://www.youtube.com/embed/XVkADAwOXnU?autoplay=1&mute=1&loop=1&playlist=XVkADAwOXnU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
     </body>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: white;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #backgroundVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #backgroundVideo iframe {
+            width: 100%;
+            height: 100%;
         }
 
         #menu {
@@ -172,13 +177,7 @@
             height: 60px;
         }
 
-        .body-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-            padding: 20px;
-        }
+
 
         .subject {
             width: 200px;

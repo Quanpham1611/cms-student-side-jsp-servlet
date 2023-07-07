@@ -4,6 +4,9 @@
  */
 package Controller;
 
+import Model.Course;
+import Model.CourseContent;
+import Model.CourseExam;
 import Model.UserGoogleDto;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -33,6 +38,10 @@ public class CourseDetail extends HttpServlet {
         String courseName = request.getParameter("courseName");
         String semester = request.getParameter("semester");
         String teacher = request.getParameter("teacher");
+
+        Course c = new Course();
+        String courseId = c.getCourseIdByCourseName(courseName);
+
         request.setAttribute("picture", picture);
         request.setAttribute("courseName", courseName);
         request.setAttribute("semester", semester);
@@ -49,7 +58,18 @@ public class CourseDetail extends HttpServlet {
             request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
         } else {
 //            request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
-            request.getRequestDispatcher("coursedetailenrolled.jsp").forward(request, response);
+            CourseContent courseContent = new CourseContent();
+            ArrayList<CourseContent> content = courseContent.getCourseContentByCourseId(courseId);
+            
+            CourseExam courseExam = new CourseExam();
+            ArrayList<CourseExam> exam = courseExam.getExamByCourseId(courseId);
+            if (!content.isEmpty() || !exam.isEmpty()) {
+                request.setAttribute("exam", exam);
+                request.setAttribute("content", content);
+                request.getRequestDispatcher("coursedetailenrolled.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("coursedetailenrolledempty.jsp").forward(request, response);
+            }
         }
 //        request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
     }

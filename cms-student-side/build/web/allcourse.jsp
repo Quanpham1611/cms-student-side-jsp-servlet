@@ -42,10 +42,13 @@
 
             <div class="menu-bg" id="menu-bg"></div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="width: 100px; height: 27px; margin-left: 70px; margin-top: 15px">
+            <form action="searchkeyword" method="get">
+                <input type="text" id="keywordInput" name="keyword" placeholder="Nhập từ khóa" style="height: 20px; margin-left: 10px; margin-top: 15px">
+            </form>
         </div>
         <div class="body-content">
             <c:forEach items="${allCourses}" var="course">
-                <div class="subject"">
+                <div class="subject">
                     <img src="${course.picture}" style="width: 100%; height: 100%">
                     <a href="course?picture=${course.picture}&courseName=${course.courseName}&semester=${course.semester}&teacher=${course.teacherName}">Course Name: ${course.courseName}</a>
                     <p>Semester: ${course.semester}</p>
@@ -164,7 +167,7 @@
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             background-color: white;
             height: 60px;
         }
@@ -194,6 +197,13 @@
         document.getElementById("nav").classList.toggle("change");
         document.getElementById("menu-bg").classList.toggle("change-bg");
     }
+    function onKeywordInputKeyDown(event) {
+        if (event.keyCode === 13) { // Enter key
+            var keyword = document.getElementById("keywordInput").value;
+            window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+        }
+    }
 
+    document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
 </script>
 </html>
