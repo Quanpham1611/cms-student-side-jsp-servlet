@@ -131,6 +131,7 @@ public class Document {
     - Tạo bảng
     create table SubmitExam(
 	UserId nvarchar(256) references Users(ID),
+	CourseId nvarchar(256) references Course(CourseId),
 	ExamName nvarchar(256),
 	FileName nvarchar(256) not null,
 	FilePath nvarchar(256) not null

@@ -24,11 +24,10 @@
                 </label>
 
                 <ul class="menu__box">
-                    <li><a class="menu__item" href="#">Home</a></li>
-                    <li><a class="menu__item" href="#">About</a></li>
-                    <li><a class="menu__item" href="#">Team</a></li>
-                    <li><a class="menu__item" href="#">Contact</a></li>
-                    <li><a class="menu__item" href="#">Twitter</a></li>
+                    <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
+
+
                 </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
@@ -38,6 +37,7 @@
 
         <form action="submit-exam" method="post" enctype="multipart/form-data">
             <input type="hidden" name="examName" value="<%= request.getParameter("examName") %>">
+            <input type="hidden" name="courseName" value="<%= request.getParameter("courseName") %>">
             <input type="file" name="examFile" style="margin-top: 10px; margin-bottom: 10px"><br>
             <input type="submit" value="Nộp bài kiểm tra">
         </form>
@@ -141,4 +141,17 @@
             color: #000;
         }
     </style>
+    <script>
+        // Lấy giá trị thông báo từ request attribute
+        var message = "${message}";
+        var error = "${error}";
+
+        // Kiểm tra và hiển thị thông báo
+        if (message !== "") {
+            alert(message);
+        } else if (error !== "") {
+            alert(error);
+        }
+    </script>
+
 </html>

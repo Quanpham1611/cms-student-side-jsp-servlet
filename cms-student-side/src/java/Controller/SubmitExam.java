@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Course;
 import Model.ExamSubmit;
 import Model.UserGoogleDto;
 
@@ -25,6 +26,9 @@ public class SubmitExam extends HttpServlet {
             throws ServletException, IOException {
         
         String examName = request.getParameter("examName");
+        String courseName = request.getParameter("courseName");
+        Course c = new Course();
+        String courseId = c.getCourseIdByCourseName(courseName);
         //Đây là phương thức để lấy phần dữ liệu file được gửi lên từ client (trình duyệt) thông qua request
         Part filePart = request.getPart("examFile");
         //Đây là phương thức để lấy tên file gốc (chưa được thay đổi) của phần dữ liệu file
@@ -38,16 +42,15 @@ public class SubmitExam extends HttpServlet {
         String userId = user.getId();
         System.out.println(userId);
         ExamSubmit examSubmit = new ExamSubmit();
-        boolean success = examSubmit.insertExamSubmission(userId, examName, fileName, filePath);
+        boolean success = examSubmit.insertExamSubmission(userId, courseId, examName, fileName, filePath);
 
         if (success) {
             String message = "Bạn đã nộp bài thành công!";
             request.setAttribute("message", message);
-            request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
             String error = "Có lỗi xảy ra khi nộp bài!";
             request.setAttribute("error", error);
-            request.getRequestDispatcher("fail.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("submitfile.jsp").forward(request, response);
     }
 }

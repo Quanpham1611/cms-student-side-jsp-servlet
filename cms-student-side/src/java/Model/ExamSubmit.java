@@ -15,7 +15,8 @@ import java.sql.Statement;
  *
  * @author Dell
  */
-public class ExamSubmit extends DBContext{
+public class ExamSubmit extends DBContext {
+
     String examName, fileName, filePath;
 
     public ExamSubmit(String examName, String fileName, String filePath) {
@@ -52,8 +53,7 @@ public class ExamSubmit extends DBContext{
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    
-    
+
     Connection cnn;//Ket noi database
     Statement stm;//thực hiện câu lệnh sql
     ResultSet rs;//lưu trữ và xử lí dữ liệu
@@ -67,20 +67,21 @@ public class ExamSubmit extends DBContext{
         }
     }
 
-    public boolean insertExamSubmission(String userId, String examName, String fileName, String filePath) {
-    try {
-        String sql = "INSERT INTO SubmitExam (UserId, ExamName, FileName, FilePath) VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = cnn.prepareStatement(sql);
-        pstmt.setString(1, userId);
-        pstmt.setString(2, examName);
-        pstmt.setString(3, fileName);
-        pstmt.setString(4, filePath);
-        int rowsAffected = pstmt.executeUpdate();
-        return rowsAffected > 0;
-    } catch (SQLException e) {
-        System.out.println("insertExamSubmission: " + e.getMessage());
-        return false;
+    public boolean insertExamSubmission(String userId, String courseId, String examName, String fileName, String filePath) {
+        try {
+            String sql = "INSERT INTO SubmitExam (UserId, CourseId, ExamName, FileName, FilePath) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = cnn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, courseId);
+            pstmt.setString(3, examName);
+            pstmt.setString(4, fileName);
+            pstmt.setString(5, filePath);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("insertExamSubmission: " + e.getMessage());
+            return false;
+        }
     }
-}
 
 }
