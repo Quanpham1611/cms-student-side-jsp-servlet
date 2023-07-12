@@ -31,7 +31,7 @@
             </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
-            <h2 style="margin-left: 10px; color: red">${courseName} - ${teacher} - ${semester}</h2>
+            <h2 style="margin-left: 10px; color: red">${courseName}</h2>
         </div>
 
         <div class="content-body">

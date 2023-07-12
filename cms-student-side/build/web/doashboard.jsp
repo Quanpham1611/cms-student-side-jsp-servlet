@@ -235,6 +235,7 @@
             if (selectedCourse !== "") {
                 window.location.href = "enroll?courseName=" + selectedCourse;
             }
+        }
 
             function onKeywordInputKeyDown(event) {
                 if (event.keyCode === 13) { // Enter key

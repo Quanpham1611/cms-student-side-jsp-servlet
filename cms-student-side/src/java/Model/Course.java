@@ -134,6 +134,8 @@ public class Course extends DBContext {
         return allcourse;
     }
 
+    
+
     public boolean enrollCourse(String courseName, String userId) {
         try {
             // Truy vấn lấy courseId từ bảng Course
@@ -143,6 +145,20 @@ public class Course extends DBContext {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 String courseId = rs.getString("CourseId");
+
+                // Kiểm tra xem đã tồn tại bản ghi trong bảng UserCourse với cùng userId và courseId hay chưa
+                sql = "SELECT COUNT(*) AS count FROM UserCourse WHERE UserId = ? AND CourseId = ?";
+                pstmt = cnn.prepareStatement(sql);
+                pstmt.setString(1, userId);
+                pstmt.setString(2, courseId);
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    int count = rs.getInt("count");
+                    if (count > 0) {
+                        // Khóa học đã được đăng ký bởi người dùng
+                        return true;
+                    }
+                }
 
                 // Chèn dữ liệu vào bảng UserCourse
                 sql = "INSERT INTO UserCourse (UserId, CourseId) VALUES (?, ?)";
@@ -164,17 +180,18 @@ public class Course extends DBContext {
 
         try {
             // Truy vấn theo thứ tự ưu tiên: CourseId, CourseName, TeacherName
-            String sqlQuery = "SELECT * FROM Course WHERE CourseId like ? UNION ALL "
-                    + "SELECT * FROM Course WHERE CourseName like ? AND CourseId <> ? UNION ALL "
-                    + "SELECT * FROM Course WHERE TeacherName like ? AND CourseId <> ? AND CourseName <> ?";
-
+//            String sqlQuery = "SELECT * FROM Course WHERE CourseId like ? UNION ALL "
+//                    + "SELECT * FROM Course WHERE CourseName like ? AND CourseId <> ? UNION ALL "
+//                    + "SELECT * FROM Course WHERE TeacherName like ? AND CourseId <> ? AND CourseName <> ?";
+            String sqlQuery = "SELECT * FROM Course WHERE TeacherName like ? OR CourseId like ? OR CourseName like ?";
+            
             PreparedStatement statement = cnn.prepareStatement(sqlQuery);
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");
             statement.setString(3, "%" + keyword + "%");
-            statement.setString(4, "%" + keyword + "%");
-            statement.setString(5, "%" + keyword + "%");
-            statement.setString(6, "%" + keyword + "%");
+//            statement.setString(4, "%" + keyword + "%");
+//            statement.setString(5, "%" + keyword + "%");
+//            statement.setString(6, "%" + keyword + "%");
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -221,4 +238,3 @@ public class Course extends DBContext {
         return courseId;
     }
 }
-

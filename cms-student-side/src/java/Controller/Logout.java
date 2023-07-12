@@ -56,7 +56,7 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         // Xóa phiên làm việc của người dùng
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         session.invalidate();
 
         // Chuyển hướng về trang index.html

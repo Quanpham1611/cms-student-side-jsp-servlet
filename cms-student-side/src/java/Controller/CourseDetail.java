@@ -34,18 +34,14 @@ public class CourseDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String picture = request.getParameter("picture");
         String courseName = request.getParameter("courseName");
-        String semester = request.getParameter("semester");
-        String teacher = request.getParameter("teacher");
+
 
         Course c = new Course();
         String courseId = c.getCourseIdByCourseName(courseName);
 
-        request.setAttribute("picture", picture);
         request.setAttribute("courseName", courseName);
-        request.setAttribute("semester", semester);
-        request.setAttribute("teacher", teacher);
+
 
         HttpSession session = request.getSession();
         UserGoogleDto user = (UserGoogleDto) session.getAttribute("user");

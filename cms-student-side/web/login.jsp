@@ -48,12 +48,14 @@
     </head>
     <body>
         <div class="center">
-            <div class="content">
+<!--            <div class="content">
                 <h1 style="font-weight: bold; color: #FF0000">CMS - Course Management System</h1>
                 <h2 style="font-size: 10px">Đăng nhập bằng tài khoản của bạn trên:</h2>
-            </div>
+            </div>-->
             <!-- Các phần tử khác trong body -->
             <div class="frame">
+                <h1 style="font-weight: bold; color: #FF0000">CMS - Course Management System</h1>
+                <h2 style="font-size: 10px">Đăng nhập bằng tài khoản của bạn trên:</h2>
                 <%-- Kiểm tra thông báo lỗi và hiển thị thông báo nếu có --%>
                 <c:if test="${param.error == 'invalid_email'}">
                     <p style="color: red;">Vui lòng sử dụng email @fpt.edu.vn để đăng nhập!</p>
@@ -64,6 +66,7 @@
                 </a>
             </div>
     </body>
+    
 </html>
 
 

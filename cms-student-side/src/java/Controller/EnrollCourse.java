@@ -61,7 +61,9 @@ public class EnrollCourse extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String courseName = request.getParameter("courseName");
+        System.out.println(courseName);
+        doPost(request, response);
     }
 
     /**
@@ -81,12 +83,12 @@ public class EnrollCourse extends HttpServlet {
 
         Course c = new Course();
         String courseName = request.getParameter("courseName");
-        String teacher = request.getParameter("teacher");
         boolean success = c.enrollCourse(courseName, userId);
-
+        System.out.println(success);
         if (success) {
             // Nếu thêm thành công, chuyển hướng đến trang coursedetailenrolled.jsp
-            String redirectURL = "coursedetailenrolled.jsp?courseName=" + courseName + "&teacherName=" + teacher;
+            request.setAttribute("courseName", courseName);
+            String redirectURL = "course";
             RequestDispatcher dispatcher = request.getRequestDispatcher(redirectURL);
             dispatcher.forward(request, response);
         } else {
