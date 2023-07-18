@@ -26,11 +26,11 @@ public class CourseExam extends DBContext {
 
     private void connect() {
         cnn = super.connection;
-        if (cnn != null) {
-            System.out.println("Connect success");
-        } else {
-            System.out.println("Connect fail");
-        }
+//        if (cnn != null) {
+//            System.out.println("Connect success");
+//        } else {
+//            System.out.println("Connect fail");
+//        }
     }
 
     public CourseExam(String examName, String courseId, String begin, String finish) {
@@ -98,7 +98,6 @@ public class CourseExam extends DBContext {
 
                 CourseExam courseExam = new CourseExam(examName, courseId, begin, finish);
                 searchResult.add(courseExam);
-                System.out.println("1 " + examName +" 2 "+ courseId +" 3 " + begin +" 4 " +finish);
             }
 
             resultSet.close();

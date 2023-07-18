@@ -32,10 +32,8 @@
                 </div>
                 <nav class="nav" id="nav">
                     <ul>
-                        <li><a href="LoginGoogleHandler">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a class="menu__item" href="#" onclick="navigateToDashboard()"><i class="fa fa-home"></i>Trang chủ</a></li>
+                        <li><a class="menu__item" href="logout"><i class="fa fa-share"></i>Đăng xuất</a></li>
                     </ul>
                 </nav> 
             </div>

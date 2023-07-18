@@ -62,7 +62,6 @@ public class EnrollCourse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String courseName = request.getParameter("courseName");
-        System.out.println(courseName);
         doPost(request, response);
     }
 
@@ -84,7 +83,6 @@ public class EnrollCourse extends HttpServlet {
         Course c = new Course();
         String courseName = request.getParameter("courseName");
         boolean success = c.enrollCourse(courseName, userId);
-        System.out.println(success);
         if (success) {
             // Nếu thêm thành công, chuyển hướng đến trang coursedetailenrolled.jsp
             request.setAttribute("courseName", courseName);

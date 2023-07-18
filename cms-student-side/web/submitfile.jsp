@@ -41,6 +41,7 @@
             <input type="file" name="examFile" style="margin-top: 10px; margin-bottom: 10px"><br>
             <input type="submit" value="Nộp bài kiểm tra">
         </form>
+        <a href="submitted-files?courseName=<%=request.getParameter("courseName")%>&examName=<%=request.getParameter("examName")%>">Xem các file đã nộp</a>
 
     </body>
     <style>

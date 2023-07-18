@@ -30,11 +30,11 @@ public class CourseContent extends DBContext {
 
     private void connect() {
         cnn = super.connection;
-        if (cnn != null) {
-            System.out.println("Connect success");
-        } else {
-            System.out.println("Connect fail");
-        }
+//        if (cnn != null) {
+//            System.out.println("Connect success");
+//        } else {
+//            System.out.println("Connect fail");
+//        }
     }
 
     public CourseContent() {
@@ -111,7 +111,6 @@ public class CourseContent extends DBContext {
         } catch (SQLException e) {
             System.out.println("getCourseContentByCourseId: " + e.getMessage());
         }
-        System.out.println(searchResult);
         return searchResult;
     }
 

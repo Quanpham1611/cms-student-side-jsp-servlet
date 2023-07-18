@@ -115,11 +115,11 @@ public class UserGoogleDto extends DBContext {
 
     private void connect() {
         cnn = super.connection;
-        if (cnn != null) {
-            System.out.println("Connect success");
-        } else {
-            System.out.println("Connect fail");
-        }
+//        if (cnn != null) {
+//            System.out.println("Connect success");
+//        } else {
+//            System.out.println("Connect fail");
+//        }
     }
 
     public boolean checkEmailExistsInDatabase(String email) {
@@ -139,7 +139,7 @@ public class UserGoogleDto extends DBContext {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("checkEmailExistsInDatabase" + e.getMessage());
         }
         return false;
     }
@@ -178,7 +178,7 @@ public class UserGoogleDto extends DBContext {
             long numberRowsAffected = stm.executeUpdate();
             System.out.println("Affected rows after inserted: " + numberRowsAffected);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("insertUserToDatabase: "+ e.getMessage());
         }
     }
 

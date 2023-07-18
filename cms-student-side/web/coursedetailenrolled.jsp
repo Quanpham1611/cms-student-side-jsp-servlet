@@ -24,11 +24,11 @@
                 </label>
 
                 <ul class="menu__box">
-                <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
-                <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
+                    <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
 
 
-            </ul>
+                </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
             <h2 style="margin-left: 10px; color: red">${courseName}</h2>
@@ -49,7 +49,15 @@
                     </a><br>
                 </div>
             </c:forEach>
-
+            <c:forEach items="${practiseList}" var="practiseContent">
+                <div class="square-box">
+                    <a href="practise?id=${practiseContent.practiseId}&name=${courseName}" style="color: black; text-decoration: none; font-size: 30px">
+                        ${practiseContent.practiseId} - ${practiseContent.practiseName}
+                    </a><a href="showresult?id=${practiseContent.practiseId}&name=${courseName}" style="color: blue; text-decoration: underline;">
+                        Xem kết quả
+                    </a><br>
+                </div>
+            </c:forEach>
         </div>
 
     </body>

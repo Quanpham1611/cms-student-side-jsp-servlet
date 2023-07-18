@@ -46,7 +46,6 @@ public class LoginGoogleHandler extends HttpServlet {
         String name = user.getName();
         String picture = user.getPicture();
         String userId = user.getId();
-        System.out.println(email.endsWith("@fpt.edu.vn"));
         if (email.endsWith("@fpt.edu.vn")) {
             boolean existsInDatabase = user.checkEmailExistsInDatabase(email);
             System.out.println(existsInDatabase);
@@ -144,9 +143,13 @@ public class LoginGoogleHandler extends HttpServlet {
     }// </editor-fold>
 
     private void startUserSession(HttpServletRequest request, UserGoogleDto user) {
-        HttpSession session = request.getSession();
+        HttpSession session;
+        
+        session = request.getSession(true);
         session.setAttribute("user", user);
         session.setMaxInactiveInterval(1800); //user have max time is 30 minutes, after that require log in again
+        
+        
     }
 
 }

@@ -4,9 +4,12 @@
  */
 package Controller;
 
+import Model.Answer;
 import Model.Course;
 import Model.CourseContent;
 import Model.CourseExam;
+import Model.Practise;
+import Model.Question;
 import Model.UserGoogleDto;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -51,6 +54,12 @@ public class CourseDetail extends HttpServlet {
 
         if (!isEnrolled) {
 //            request.getRequestDispatcher("coursedetailenrolled.jsp").forward(request, response);
+            String semester = request.getParameter("semester");
+            String teacher = request.getParameter("teacher");
+            String picture = request.getParameter("picture");
+            request.setAttribute("semester", semester);
+            request.setAttribute("teacher", teacher);
+            request.setAttribute("picture", picture);
             request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
         } else {
 //            request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
@@ -59,10 +68,14 @@ public class CourseDetail extends HttpServlet {
             
             CourseExam courseExam = new CourseExam();
             ArrayList<CourseExam> exam = courseExam.getExamByCourseId(courseId);
+            
+            Practise p = new Practise();
+            ArrayList<Practise> practiseList = p.getListPractiseByCourseId(courseId);
 
-            if (!content.isEmpty() || !exam.isEmpty()) {
+            if (!content.isEmpty() || !exam.isEmpty() || !practiseList.isEmpty()) {
                 request.setAttribute("exam", exam);
                 request.setAttribute("content", content);
+                request.setAttribute("practiseList", practiseList);
                 request.getRequestDispatcher("coursedetailenrolled.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("coursedetailenrolledempty.jsp").forward(request, response);

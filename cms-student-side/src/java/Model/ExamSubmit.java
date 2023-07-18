@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -60,28 +62,77 @@ public class ExamSubmit extends DBContext {
 
     private void connect() {
         cnn = super.connection;
-        if (cnn != null) {
-            System.out.println("Connect success");
-        } else {
-            System.out.println("Connect fail");
-        }
+//        if (cnn != null) {
+//            System.out.println("Connect success");
+//        } else {
+//            System.out.println("Connect fail");
+//        }
     }
 
-    public boolean insertExamSubmission(String userId, String courseId, String examName, String fileName, String filePath) {
+    public boolean insertExamSubmission(String userId, String courseId, String examName, String fileName, String filePath, String submissionTimeString) {
         try {
-            String sql = "INSERT INTO SubmitExam (UserId, CourseId, ExamName, FileName, FilePath) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = cnn.prepareStatement(sql);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, courseId);
-            pstmt.setString(3, examName);
-            pstmt.setString(4, fileName);
-            pstmt.setString(5, filePath);
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            // Kiểm tra xem đã tồn tại bản ghi với UserId, CourseId, và ExamName tương ứng hay chưa
+            String sqlCheckExist = "SELECT COUNT(*) AS Count FROM SubmitExam WHERE UserId = ? AND CourseId = ? AND ExamName = ?";
+            PreparedStatement pstmtCheckExist = cnn.prepareStatement(sqlCheckExist);
+            pstmtCheckExist.setString(1, userId);
+            pstmtCheckExist.setString(2, courseId);
+            pstmtCheckExist.setString(3, examName);
+            ResultSet rsCheckExist = pstmtCheckExist.executeQuery();
+            rsCheckExist.next();
+            int count = rsCheckExist.getInt("Count");
+            rsCheckExist.close();
+            pstmtCheckExist.close();
+
+            if (count > 0) {
+                // Nếu đã tồn tại, thực hiện cập nhật thông tin
+                String sqlUpdate = "UPDATE SubmitExam SET FileName = ?, FilePath = ?, SubmissionTime = ? WHERE UserId = ? AND CourseId = ? AND ExamName = ?";
+                PreparedStatement pstmtUpdate = cnn.prepareStatement(sqlUpdate);
+                pstmtUpdate.setString(1, fileName);
+                pstmtUpdate.setString(2, filePath);
+                pstmtUpdate.setString(3, submissionTimeString);
+                pstmtUpdate.setString(4, userId);
+                pstmtUpdate.setString(5, courseId);
+                pstmtUpdate.setString(6, examName);
+                pstmtUpdate.executeUpdate();
+                pstmtUpdate.close();
+            } else {
+                // Nếu chưa tồn tại, thực hiện chèn mới
+                String sqlInsert = "INSERT INTO SubmitExam (UserId, CourseId, ExamName, FileName, FilePath, SubmissionTime) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement pstmtInsert = cnn.prepareStatement(sqlInsert);
+                pstmtInsert.setString(1, userId);
+                pstmtInsert.setString(2, courseId);
+                pstmtInsert.setString(3, examName);
+                pstmtInsert.setString(4, fileName);
+                pstmtInsert.setString(5, filePath);
+                pstmtInsert.setString(6, submissionTimeString);
+                pstmtInsert.executeUpdate();
+                pstmtInsert.close();
+            }
+
+            return true;
         } catch (SQLException e) {
             System.out.println("insertExamSubmission: " + e.getMessage());
             return false;
         }
+    }
+
+    public String getFilePathByUserIdAndCourseId(String userId, String courseId) {
+        String filePath = null;
+        try {
+            String sql = "SELECT FilePath FROM SubmitExam WHERE UserId = ? AND CourseId = ?";
+            PreparedStatement pstmt = cnn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, courseId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                filePath = rs.getString("FilePath");
+            }
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("getFilePathByUserIdAndCourseId: " + e.getMessage());
+        }
+        return filePath;
     }
 
 }

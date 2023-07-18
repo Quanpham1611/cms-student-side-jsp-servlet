@@ -42,11 +42,11 @@ public class Course extends DBContext {
 
     private void connect() {
         cnn = super.connection;
-        if (cnn != null) {
-            System.out.println("Connect success");
-        } else {
-            System.out.println("Connect fail");
-        }
+//        if (cnn != null) {
+//            System.out.println("Connect success");
+//        } else {
+//            System.out.println("Connect fail");
+//        }
     }
 
     public Course() {
