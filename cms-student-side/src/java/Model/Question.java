@@ -1,11 +1,11 @@
 package Model;
 
 import dal.DBContext;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +16,24 @@ public class Question extends DBContext {
     private String questionText;
     private List<Answer> answers;
     private String[] selectedAnswers;
+    private boolean isCorrectAnswer;
 
-    // Các phương thức hiện tại của lớp Question
-
-    // Thêm phương thức setter cho danh sách câu trả lời đã chọn
     public void setSelectedAnswers(String[] selectedAnswers) {
         this.selectedAnswers = selectedAnswers;
     }
 
-    // Thêm phương thức getter cho danh sách câu trả lời đã chọn
     public String[] getSelectedAnswers() {
         return selectedAnswers;
     }
+
+    public boolean isCorrectAnswer() {
+        return isCorrectAnswer;
+    }
+
+    public void setCorrectAnswer(boolean correct) {
+        isCorrectAnswer = correct;
+    }
+
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -38,6 +44,14 @@ public class Question extends DBContext {
 
     public String getQuestionId() {
         return questionId;
+    }
+
+    public boolean isIsCorrectAnswer() {
+        return isCorrectAnswer;
+    }
+
+    public void setIsCorrectAnswer(boolean isCorrectAnswer) {
+        this.isCorrectAnswer = isCorrectAnswer;
     }
 
     public void setQuestionId(String questionId) {
@@ -71,18 +85,10 @@ public class Question extends DBContext {
         connect();
     }
 
-    //khai bao cac thanh phan xu li database
-    Connection cnn;//Ket noi database
-    Statement stm;//thực hiện câu lệnh sql
-    ResultSet rs;//lưu trữ và xử lí dữ liệu
+    private Connection cnn;
 
     private void connect() {
         cnn = super.connection;
-//        if (cnn != null) {
-//            System.out.println("Connect success");
-//        } else {
-//            System.out.println("Connect fail");
-//        }
     }
 
     public List<Question> getQuestionsByPractiseId(String practiseId) {
@@ -91,7 +97,7 @@ public class Question extends DBContext {
             String strSQL = "SELECT TOP 10 * FROM question WHERE ID IN (SELECT TOP 10 QuestionId FROM Practise_Question WHERE PractiseId = ? ORDER BY NEWID())";
             PreparedStatement pstmt = cnn.prepareStatement(strSQL);
             pstmt.setString(1, practiseId);
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 String questionId = rs.getString("ID");
                 String courseId = rs.getString("CourseId");
@@ -104,5 +110,4 @@ public class Question extends DBContext {
         }
         return questions;
     }
-
 }

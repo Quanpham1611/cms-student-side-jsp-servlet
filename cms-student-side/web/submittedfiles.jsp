@@ -18,7 +18,7 @@
                 </label>
 
                 <ul class="menu__box">
-                    <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li><a class="menu__item" href="doashboard.jsp"><i class="fa fa-home"></i>Trang chủ</a></li>
                     <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
 
 
@@ -41,7 +41,7 @@
                 </div>
             </c:forEach>
         </div>
-
+        <a href="http://localhost:9999/cms-student-side/enroll?courseName=${courseName}">Quay về trang khóa học</a>
     </body>
     <style>
         #menu__toggle {

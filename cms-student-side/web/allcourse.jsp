@@ -32,7 +32,7 @@
                 </div>
                 <nav class="nav" id="nav">
                     <ul>
-                        <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+                        <li><a class="menu__item" href="doashboard.jsp"><i class="fa fa-home"></i>Trang chủ</a></li>
                         <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
                     </ul>
 

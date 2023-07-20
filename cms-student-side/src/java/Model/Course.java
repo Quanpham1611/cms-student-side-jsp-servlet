@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class Course extends DBContext {
 
-    private String CourseId, CourseName, Semester, TeacherName, Picture;
+    private String CourseId, CourseName, Semester, TeacherName, Picture, dateBegin, dateEnd;
 
     //khai bao cac thanh phan xu li database
     Connection cnn;//Ket noi database
@@ -30,6 +30,33 @@ public class Course extends DBContext {
         this.CourseId = CourseId;
         this.CourseName = CourseName;
         connect();
+    }
+
+    public Course(String CourseId, String CourseName, String Semester, String TeacherName, String Picture, String dateBegin, String dateEnd) {
+        this.CourseId = CourseId;
+        this.CourseName = CourseName;
+        this.Semester = Semester;
+        this.TeacherName = TeacherName;
+        this.Picture = Picture;
+        this.dateBegin = dateBegin;
+        this.dateEnd = dateEnd;
+        connect();
+    }
+
+    public String getDateBegin() {
+        return dateBegin;
+    }
+
+    public void setDateBegin(String dateBegin) {
+        this.dateBegin = dateBegin;
+    }
+
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getPicture() {
@@ -134,8 +161,6 @@ public class Course extends DBContext {
         return allcourse;
     }
 
-    
-
     public boolean enrollCourse(String courseName, String userId) {
         try {
             // Truy vấn lấy courseId từ bảng Course
@@ -184,7 +209,7 @@ public class Course extends DBContext {
 //                    + "SELECT * FROM Course WHERE CourseName like ? AND CourseId <> ? UNION ALL "
 //                    + "SELECT * FROM Course WHERE TeacherName like ? AND CourseId <> ? AND CourseName <> ?";
             String sqlQuery = "SELECT * FROM Course WHERE TeacherName like ? OR CourseId like ? OR CourseName like ?";
-            
+
             PreparedStatement statement = cnn.prepareStatement(sqlQuery);
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");
@@ -205,11 +230,6 @@ public class Course extends DBContext {
 
                 Course course = new Course(courseId, courseName, semester, teacherName, picture);
                 searchResult.add(course);
-                System.out.println(courseId);
-                System.out.println(courseName);
-                System.out.println(semester);
-                System.out.println(teacherName);
-                System.out.println(picture);
             }
 
             resultSet.close();
@@ -236,5 +256,66 @@ public class Course extends DBContext {
             System.out.println("getCourseIdByCourseName: " + e.getMessage());
         }
         return courseId;
+    }
+
+    public String getDateBeginInDatabase(String courseId) {
+        String dateBegin = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT dateBegin FROM course WHERE courseId = ?");
+            statement.setString(1, courseId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Lấy kết quả từ ResultSet
+            if (resultSet.next()) {
+                dateBegin = resultSet.getString("dateBegin");
+            }
+        } catch (SQLException e) {
+            System.out.println("getDateBeginInDatabase: " + e.getMessage());
+        }
+        return dateBegin;
+
+    }
+
+    public String getDateEndInDatabase(String courseId) {
+        String dateEnd = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT dateEnd FROM course WHERE courseId = ?");
+            statement.setString(1, courseId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Lấy kết quả từ ResultSet
+            if (resultSet.next()) {
+                dateEnd = resultSet.getString("dateEnd");
+            }
+        } catch (SQLException e) {
+            System.out.println("getDateEndInDatabase: " + e.getMessage());
+        }
+        return dateEnd;
+    }
+
+    public boolean deleteEnrollCourse(String userId, String courseId) {
+        try {
+            // Kiểm tra xem bản ghi có tồn tại trong bảng UserCourse với cùng userId và courseId hay chưa
+            String sql = "SELECT COUNT(*) AS count FROM UserCourse WHERE UserId = ? AND CourseId = ?";
+            PreparedStatement pstmt = cnn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, courseId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    // Xóa bản ghi khỏi bảng UserCourse
+                    sql = "DELETE FROM UserCourse WHERE UserId = ? AND CourseId = ?";
+                    pstmt = cnn.prepareStatement(sql);
+                    pstmt.setString(1, userId);
+                    pstmt.setString(2, courseId);
+                    pstmt.executeUpdate();
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("deleteEnrollCourse: " + e.getMessage());
+        }
+        return false;
     }
 }

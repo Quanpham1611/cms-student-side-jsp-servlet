@@ -42,7 +42,7 @@ public class CourseDetail extends HttpServlet {
 
         Course c = new Course();
         String courseId = c.getCourseIdByCourseName(courseName);
-
+        
         request.setAttribute("courseName", courseName);
 
 
@@ -69,13 +69,18 @@ public class CourseDetail extends HttpServlet {
             CourseExam courseExam = new CourseExam();
             ArrayList<CourseExam> exam = courseExam.getExamByCourseId(courseId);
             
+            String dateBegin = c.getDateBeginInDatabase(courseId);
+            String dateEnd = c.getDateEndInDatabase(courseId);
+            
             Practise p = new Practise();
             ArrayList<Practise> practiseList = p.getListPractiseByCourseId(courseId);
-
+            
             if (!content.isEmpty() || !exam.isEmpty() || !practiseList.isEmpty()) {
                 request.setAttribute("exam", exam);
                 request.setAttribute("content", content);
                 request.setAttribute("practiseList", practiseList);
+                request.setAttribute("dateBegin", dateBegin);
+                request.setAttribute("dateEnd", dateEnd);
                 request.getRequestDispatcher("coursedetailenrolled.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("coursedetailenrolledempty.jsp").forward(request, response);

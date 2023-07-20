@@ -25,7 +25,7 @@
                 </div>
                 <nav class="nav" id="nav">
                     <ul>
-                        <li><a class="menu__item" href="#" onclick="navigateToDashboard()"><i class="fa fa-home"></i>Trang chủ</a></li>
+                        <li><a class="menu__item" href="doashboard.jsp" onclick="navigateToDashboard()"><i class="fa fa-home"></i>Trang chủ</a></li>
                         <li><a class="menu__item" href="logout"><i class="fa fa-share"></i>Đăng xuất</a></li>
                     </ul>
                 </nav> 

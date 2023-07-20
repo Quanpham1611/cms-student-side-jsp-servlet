@@ -22,6 +22,16 @@ public class CourseContent extends DBContext {
     private String courseId;
     private String contentName;
     private String contentLink;
+    private String timeAdd;
+
+    public CourseContent(String contentId, String courseId, String contentName, String contentLink, String timeAdd) {
+        this.contentId = contentId;
+        this.courseId = courseId;
+        this.contentName = contentName;
+        this.contentLink = contentLink;
+        this.timeAdd = timeAdd;
+        connect();
+    }
 
     //khai bao cac thanh phan xu li database
     Connection cnn;//Ket noi database
@@ -99,8 +109,8 @@ public class CourseContent extends DBContext {
                 courseId = resultSet.getString("CourseId");
                 contentName = resultSet.getString("FileName");
                 contentLink = resultSet.getString("FilePath");
-
-                CourseContent courseContent = new CourseContent(contentId, courseId, contentName, contentLink);
+                timeAdd = resultSet.getString("timeAdd");
+                CourseContent courseContent = new CourseContent(contentId, courseId, contentName, contentLink, timeAdd);
                 searchResult.add(courseContent);
                 
 
@@ -112,6 +122,14 @@ public class CourseContent extends DBContext {
             System.out.println("getCourseContentByCourseId: " + e.getMessage());
         }
         return searchResult;
+    }
+
+    public String getTimeAdd() {
+        return timeAdd;
+    }
+
+    public void setTimeAdd(String timeAdd) {
+        this.timeAdd = timeAdd;
     }
 
 }

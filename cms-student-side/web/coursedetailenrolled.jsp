@@ -24,14 +24,21 @@
                 </label>
 
                 <ul class="menu__box">
-                    <li><a class="menu__item" href="index.html"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li><a class="menu__item" href="doashboard.jsp"><i class="fa fa-home"></i>Trang chủ</a></li>
                     <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
 
 
                 </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
+            <form action="searchkeyword" method="get">
+                <input type="text" id="keywordInput" name="keyword" placeholder="Nhập từ khóa" style="height: 20px; margin-left: 10px;">
+            </form>
             <h2 style="margin-left: 10px; color: red">${courseName}</h2>
+            <form action="outclass" method="get">
+                <input type="hidden" name="name" value="${courseName}">
+                <input type="submit" value="Rời khỏi lớp" style="margin-left: 700px">
+            </form>
         </div>
 
         <div class="content-body">
@@ -56,12 +63,77 @@
                     </a><a href="showresult?id=${practiseContent.practiseId}&name=${courseName}" style="color: blue; text-decoration: underline;">
                         Xem kết quả
                     </a><br>
+
                 </div>
             </c:forEach>
+
         </div>
+        <div id="week-container"></div>
+
+        <script>
+            const dateBegin = new Date('${dateBegin}');
+            const dateEnd = new Date('${dateEnd}');
+            const weekContainer = document.querySelector('#week-container');
+
+            let currentWeekStart = new Date(dateBegin.getTime());
+            let currentWeekEnd = new Date(currentWeekStart.getTime());
+            currentWeekEnd.setDate(currentWeekEnd.getDate() + 6);
+            let weeknumber = 1;
+            while (currentWeekStart < dateEnd) {
+                const weekElement = document.createElement('div');
+                weekElement.classList.add('week-box');
+                weekElement.innerHTML = 'Tuần ${weeknumber}';
+
+                let currentDate = new Date(currentWeekStart.getTime());
+                while (currentDate <= currentWeekEnd) {
+                    const dateElement = document.createElement('div');
+                    dateElement.classList.add('date-box');
+                    dateElement.textContent = currentDate.getDate();
+                    weekElement.appendChild(dateElement);
+
+                    currentDate.setDate(currentDate.getDate() + 1);
+                    
+                }
+
+                weekContainer.appendChild(weekElement);
+                
+                currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+                currentWeekEnd.setDate(currentWeekEnd.getDate() + 7);
+                weeknumber++;
+            }
+            function onKeywordInputKeyDown(event) {
+                if (event.keyCode === 13) { // Enter key
+                    var keyword = document.getElementById("keywordInput").value;
+                    window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+                }
+            }
+
+            document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
+
+        </script>
+
+
 
     </body>
     <style>
+        .week-box {
+            display: inline-block;
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            background-color: lightgray;
+            text-align: center;
+        }
+
+        .date-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            background-color: white;
+        }
+
+
         #menu__toggle {
             opacity: 0;
         }

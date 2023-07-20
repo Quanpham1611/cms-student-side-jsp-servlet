@@ -24,15 +24,17 @@
                 </label>
 
                 <ul class="menu__box">
-                    <li><a class="menu__item" href="#">Home</a></li>
-                    <li><a class="menu__item" href="#">About</a></li>
-                    <li><a class="menu__item" href="#">Team</a></li>
-                    <li><a class="menu__item" href="#">Contact</a></li>
-                    <li><a class="menu__item" href="#">Twitter</a></li>
+                    <li><a class="menu__item" href="doashboard.jsp"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li><a class="menu__item" href="allcourse"><i class="fa fa-book"></i>Tất cả khóa học</a></li>
+
+
                 </ul>
             </div>
             <img src="https://cmshn.fpt.edu.vn/pluginfile.php/1/core_admin/logocompact/0x70/1684246329/2020-FPTU-Eng.png" alt="logo" style="height: 27px; margin-left: 40px;">
             <h2 style="margin-left: 10px; color: red">${courseName}</h2>
+            <form action="searchkeyword" method="get">
+                <input type="text" id="keywordInput" name="keyword" placeholder="Nhập từ khóa" style="height: 20px; margin-left: 10px;">
+            </form>
         </div>
 
         <div class="content-body">
@@ -141,4 +143,15 @@
             color: #000;
         }
     </style>
+    <script>
+        function onKeywordInputKeyDown(event) {
+            if (event.keyCode === 13) { // Enter key
+                var keyword = document.getElementById("keywordInput").value;
+                window.location.href = "searchkeyword?keyword=" + encodeURIComponent(keyword);
+            }
+        }
+
+        document.getElementById("keywordInput").addEventListener("keydown", onKeywordInputKeyDown);
+
+    </script>
 </html>

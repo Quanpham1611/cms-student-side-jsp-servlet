@@ -4,7 +4,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Practice</title>
+        <title>CMS - Course Management System</title>
+        <link rel="shortcut icon" href="https://cmshn.fpt.edu.vn/theme/image.php/trema/theme/1684246329/favicon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
@@ -17,7 +19,7 @@
                 <p>Câu hỏi ${question.questionId}: ${question.questionText}</p>
                 <c:forEach items="${question.answers}" var="answer">
                     <label>
-                        <input type="checkbox" name="answers_${question.questionId}" value="${answer.answerId}">
+                        <input type="radio" name="answers_${question.questionId}" value="${answer.answerId}">
                         ${answer.answerText}
                     </label><br>
                 </c:forEach>
@@ -27,6 +29,7 @@
         <script>
             // JavaScript code for countdown timer
             var timeLeft = 600; // 10 minutes in seconds
+            var warningDisplayed = false; // Track if the warning has been displayed
 
             function updateCountdown() {
                 var minutes = Math.floor(timeLeft / 60);
@@ -46,53 +49,34 @@
             updateCountdown();
 
             // Listen for beforeunload event (when the user is leaving the page)
-            // Listen for beforeunload event (when the user is leaving the page)
-    window.onbeforeunload = function(event) {
-        // Prevent the countdown from continuing
-        clearTimeout(updateCountdown);
+            window.addEventListener('beforeunload', function (event) {
+                if (!warningDisplayed) {
+                    clearTimeout(updateCountdown);
 
-        // Hiển thị cửa sổ cảnh báo tuỳ chỉnh
-        event.preventDefault();
-        event.returnValue = '';
+                    event.preventDefault();
+                    event.returnValue = '';
 
-        // Sử dụng thư viện SweetAlert2 để hiển thị cửa sổ cảnh báo
-        Swal.fire({
-            title: 'Bạn có muốn tiếp tục làm bài kiểm tra?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Tiếp tục làm bài',
-            cancelButtonText: 'Thoát bài kiểm tra',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Nếu người dùng chọn "Tiếp tục làm bài", cho phép tiếp tục đếm ngược
-                updateCountdown();
-            } else {
-                // Nếu người dùng chọn "Thoát bài kiểm tra", submit bài kiểm tra
-                submitAnswers();
-            }
-        });
-    };
+                    Swal.fire({
+                        title: 'Bạn có muốn tiếp tục làm bài kiểm tra?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Tiếp tục làm bài',
+                        cancelButtonText: 'Thoát bài kiểm tra',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            updateCountdown();
+                        } else {
+                            submitAnswers();
+                        }
+                    });
+
+                    warningDisplayed = true; // Mark the warning as displayed
+                }
+            });
 
             function submitAnswers() {
-                // Use AJAX to submit the form data
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        // Redirect to the showresult.jsp page after submitting the answers
-                        window.location.href = 'http://localhost:9999/cms-student-side/enroll?courseName=Discrete%20mathematics';
-                    }
-                };
-                xhttp.open('POST', 'checkanswer', true);
-                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhttp.send(new URLSearchParams(new FormData(document.getElementById('answer'))));
+                document.getElementById('answer').submit();
             }
         </script>
     </body>
 </html>
-
-
-
-
-
-
-

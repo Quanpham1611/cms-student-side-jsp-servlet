@@ -47,6 +47,7 @@ public class SubmittedFiles extends HttpServlet {
         ExamFile e = new ExamFile();
         ArrayList<ExamFile> efl = e.getExamFilesByUserId(userId, courseId, examName);
         
+        request.setAttribute("courseName", courseName);
         request.setAttribute("efl", efl);
         request.getRequestDispatcher("submittedfiles.jsp").forward(request, response);
     } 

@@ -5,8 +5,8 @@ import Model.Course;
 import Model.Question;
 import Model.Result;
 import Model.UserGoogleDto;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,11 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "CheckAnswer", urlPatterns = {"/checkanswer"})
 public class CheckAnswer extends HttpServlet {
+    //Quanpham1@!
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -60,12 +62,15 @@ public class CheckAnswer extends HttpServlet {
                     score++;
                 }
             }
+            // Set the result of each question to use in showresult.jsp
+            question.setCorrectAnswer(isCorrect);
+            isCorrect = true; // Reset for the next question
         }
 
         HttpSession session = request.getSession();
         UserGoogleDto user = (UserGoogleDto) session.getAttribute("user");
         String userId = user.getId();
-        
+
         Result r = new Result();
 
         String courseName = request.getParameter("name");
@@ -75,10 +80,35 @@ public class CheckAnswer extends HttpServlet {
         boolean insert = r.insertResult(userId, courseId, practiseId, score);
 
         if (insert) {
+            // Lưu trữ danh sách câu trả lời đã chọn vào trong session
+            Map<String, String[]> selectedAnswersMap = new HashMap<>();
+            for (Question question : questions) {
+                selectedAnswersMap.put(question.getQuestionId(), question.getSelectedAnswers());
+            }
+            session.setAttribute("selectedAnswersMap", selectedAnswersMap);
+
+            // Kiểm tra câu trả lời của người dùng với câu trả lời chính xác
+            for (Question question : questions) {
+                boolean isCorrect1 = true;
+                List<Answer> correctAnswers = a.getCorrectAnswersByQuesId(question.getQuestionId());
+                for (Answer correctAnswer : correctAnswers) {
+                    boolean isSelected = contains(question.getSelectedAnswers(), correctAnswer.getAnswerId());
+                    boolean isCorrectAnswer = correctAnswer.isCorrect();
+                    if (!isSelected || !isCorrectAnswer) {
+                        isCorrect1 = false;
+                        break;
+                    }
+                }
+                question.setCorrectAnswer(isCorrect1);
+            }
+
+            session.setAttribute("questions", questions);
+
             request.setAttribute("courseId", courseId);
             request.setAttribute("score", score);
             request.setAttribute("practiseId", practiseId);
             request.setAttribute("courseName", courseName);
+            request.setAttribute("questions", questions); // Pass the list of questions to showresult.jsp
             request.getRequestDispatcher("showresult.jsp").forward(request, response);
         }
     }
@@ -88,7 +118,7 @@ public class CheckAnswer extends HttpServlet {
             return false;
         }
         for (String item : array) {
-            if (value.equals(item)) {
+            if (value.equals(item)) { // Sử dụng phương thức equals để so sánh
                 return true;
             }
         }
@@ -99,5 +129,4 @@ public class CheckAnswer extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }
