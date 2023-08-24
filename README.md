@@ -12,7 +12,9 @@ using java 8, jsp, servlet
 - Model: MVC
 - Setup library to correct path
 - Deploy and Run the project
-[![Watch the video](https://img.youtube.com/vi/watch?v=sxnGZt0ViG4)](https://www.youtube.com/watch?v=sxnGZt0ViG4)
 
-[<img src="https://img.youtube.com/watch?v=sxnGZt0ViG4" width="600" height="300"
-/>](https://www.youtube.com/watch?v=sxnGZt0ViG4)
+[![Watch the video](https://img.youtube.com/vi/watch?v=sxnGZt0ViG4/hqdefault.jpg)](https://www.youtube.com/embed/watch?v=sxnGZt0ViG4)
+
+[<img src="https://img.youtube.com/vi/watch?v=sxnGZt0ViG4/hqdefault.jpg" width="600" height="300"
+/>](https://www.youtube.com/embed/watch?v=sxnGZt0ViG4)
+
